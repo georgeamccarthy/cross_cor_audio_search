@@ -1,5 +1,5 @@
 from scipy.io import wavfile
-from scipy.signal import fftconvolve
+from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -35,8 +35,8 @@ data = data[:-chunk_excess]
 # Cross-correlation function. Returns a similarity score.
 # From https://stackoverflow.com/questions/33383650/using-cross-correlation-to-detect-an-audio-signal-within-another-signal
 def similarity(data, signature):
-    corr = fftconvolve(data, signature, mode='same')           
-    return max(abs(corr))
+    corr = signal.fftconvolve(data, signature[::-1], mode='same')
+    return max(abs(corr)) 
 
 # Evaluate the similarity score for each chunk in the data.
 scores = []
